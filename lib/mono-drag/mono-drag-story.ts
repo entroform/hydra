@@ -1,16 +1,24 @@
 import {
-  DOMUtil,
-  Vector2,
-} from '~/rocket';
+  isHTMLElement
+} from '@nekobird/doko';
+import { Vector2 } from '@nekobird/vector2';
+
+declare class MonoDrag {
+  config
+};
+declare class MonoDragEvent {
+  identifier
+  time
+  type
+  position
+  velocity
+  acceleration
+  originalEvent
+};
 
 import {
-  MonoDrag,
-} from './mono-drag';
-
-import {
-  MonoDragEvent,
   MonoDragEventIdentifier,
-} from './mono-drag-event';
+} from './shared';
 
 export class MonoDragStory {
   public monoDrag: MonoDrag;
@@ -156,10 +164,10 @@ export class MonoDragStory {
   private updateOffset(position: Vector2) {
     const { target, offsetFrom } = this.monoDrag.config;
 
-    if (DOMUtil.isHTMLElement(target) === true) {
+    if (isHTMLElement(target) === true) {
       let element = target as HTMLElement;
 
-      if (DOMUtil.isHTMLElement(offsetFrom) === true) {
+      if (isHTMLElement(offsetFrom) === true) {
         element = offsetFrom as HTMLElement;
       }
 

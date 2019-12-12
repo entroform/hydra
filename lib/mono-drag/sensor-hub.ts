@@ -1,10 +1,8 @@
 import {
-  Util,
+  truthChain,
 } from '@nekobird/piko';
 
-import {
-  MonoDrag,
-} from './mono-drag';
+import { MonoDrag } from './shared';
 
 import {
   MonoDragStory,
@@ -13,7 +11,7 @@ import {
 import {
   MonoDragEvent,
   MonoDragEventIdentifier,
-} from './mono-drag-event';
+} from './shared';
 
 import {
   MouseSensor,
@@ -31,13 +29,9 @@ export class SensorHub {
   public touchSensor: TouchSensor;
 
   public isListening: boolean = false;
-
   public hasOneActiveStory: boolean = false;
-
   public previousStory: MonoDragStory | null = null;
-
   public currentStory: MonoDragStory | null = null;
-
   public activeStory: MonoDragStory | null = null;
 
   public activeEventIdentifier: MonoDragEventIdentifier | null = null;
@@ -46,17 +40,15 @@ export class SensorHub {
 
   constructor(monoDrag: MonoDrag) {
     this.monoDrag = monoDrag;
-
     this.mouseSensor = new MouseSensor(this.monoDrag);
     this.touchSensor = new TouchSensor(this.monoDrag);
-
     this.history = [];
   }
 
   public listen(): this {
     if (this.isListening === false) {
 
-      const result = Util.truthChain(
+      const result = truthChain(
         () => this.mouseSensor.attach(),
         () => this.touchSensor.attach(),
       );
@@ -69,7 +61,7 @@ export class SensorHub {
 
   public stopListening() {
     if (this.isListening === true) {
-      const result = Util.truthChain(
+      const result = truthChain(
         () => this.mouseSensor.detach(),
         () => this.touchSensor.detach(),
       );

@@ -1,21 +1,20 @@
 import {
-  DOMUtil,
-} from '~/rocket';
-
-import {
-  MonoDrag,
-} from '../mono-drag';
+  isHTMLElement,
+} from '@nekobird/doko';
 
 import {
   MonoDragEvent,
   MonoDragEventType,
 } from '../mono-drag-event';
 
+import {
+  MonoDrag
+} from '../shared';
+
 export class MouseSensor {
   private monoDrag: MonoDrag;
 
   public isListening: boolean = false;
-
   public mouseButtonIsDown: boolean = false;
 
   private target: HTMLElement | null = null;
@@ -29,7 +28,7 @@ export class MouseSensor {
 
     if (
       this.isListening === false
-      && DOMUtil.isHTMLElement(target) === true
+      && isHTMLElement(target) === true
     ) {
       this.target = target as HTMLElement;
 
@@ -42,7 +41,6 @@ export class MouseSensor {
       // document.documentElement.addEventListener('mouseleave', this.onMouseLeave);
 
       this.isListening = true;
-
       return true;
     }
 
@@ -52,7 +50,7 @@ export class MouseSensor {
   public detach(): boolean {
     if (
       this.isListening === true
-      && DOMUtil.isHTMLElement(this.target) === true
+      && isHTMLElement(this.target) === true
     ) {
       const target = this.target as HTMLElement;
 
@@ -77,7 +75,6 @@ export class MouseSensor {
   private onMouseDown = (event: MouseEvent) => {
     if (this.mouseButtonIsDown === false) {
       this.dispatch('start', event);
-
       this.mouseButtonIsDown = true;
     }
   }
@@ -91,7 +88,6 @@ export class MouseSensor {
   private onMouseUp = (event: MouseEvent) => {
     if (this.mouseButtonIsDown === true) {
       this.mouseButtonIsDown = false;
-
       this.dispatch('stop', event);
     }
   }
@@ -99,7 +95,6 @@ export class MouseSensor {
   private onMouseLeave = (event: MouseEvent) => {
     if (this.mouseButtonIsDown === true) {
       this.mouseButtonIsDown = false;
-
       this.dispatch('cancel', event);
     }
   }
@@ -109,14 +104,12 @@ export class MouseSensor {
 
     if (disableContextMenu === true) {
       event.preventDefault();
-
       event.stopPropagation();
     }
   }
 
   private dispatch(type: MonoDragEventType, event: MouseEvent) {
     const monoDragEvent = new MonoDragEvent(this.monoDrag, type, event);
-
     this.monoDrag.sensorHub.receive(monoDragEvent);
   }
 }

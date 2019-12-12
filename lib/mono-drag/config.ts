@@ -1,26 +1,15 @@
 import {
   MonoDrag,
-} from './mono-drag';
-
-import {
-  MonoDragStory,
-} from './mono-drag-story';
-
-import {
   MonoDragEvent,
-} from './mono-drag-event';
+  MonoDragStory,
+} from './shared';
 
 export interface MonoDragConfig {
   target?: HTMLElement;
-
   offsetFrom?: HTMLElement;
-
   keepHistory: boolean;
-
   keepEventHistory: boolean;
-
   preventDefault: boolean;
-
   disableContextMenu: boolean;
 
   condition: (
@@ -66,28 +55,17 @@ export interface MonoDragConfig {
 
 export const MONO_DRAG_DEFAULT_CONFIG: MonoDragConfig = {
   target: undefined,
-
   offsetFrom: undefined,
-
   keepHistory: false,
-
   keepEventHistory: false,
-
   preventDefault: true,
-
   disableContextMenu: false,
 
   condition: () => true,
-
   onEvent: () => {},
-
   onDragStart: () => {},
-
   onDrag: () => {},
-
   onDragStop: () => {},
-
   onDragCancel: () => {},
-
   onDragEnd: () => {},
 };

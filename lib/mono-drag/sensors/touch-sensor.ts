@@ -1,21 +1,17 @@
 import {
-  DOMUtil,
-} from '~/rocket';
+  isHTMLElement,
+} from '@nekobird/doko';
 
 import {
   MonoDrag,
-} from '../mono-drag';
-
-import {
-  MonoDragEvent,
   MonoDragEventType,
-} from '../mono-drag-event';
+  MonoDragEvent,
+} from '../shared';
 
 export class TouchSensor {
   private monoDrag: MonoDrag;
 
   public isListening: boolean = false;
-
   public target: HTMLElement | null = null;
 
   constructor(monoDrag: MonoDrag) {
@@ -27,7 +23,7 @@ export class TouchSensor {
 
     if (
       this.isListening === false
-      && DOMUtil.isHTMLElement(target) === true
+      && isHTMLElement(target) === true
     ) {
       this.target = target as HTMLElement;
 
@@ -48,7 +44,7 @@ export class TouchSensor {
   public detach(): boolean {
     if (
       this.isListening === true
-      && DOMUtil.isHTMLElement(this.target) === true
+      && isHTMLElement(this.target) === true
     ) {
       const target = this.target as HTMLElement;
 

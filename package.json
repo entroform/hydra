@@ -1,5 +1,5 @@
 {
-  "name": "@nekobird/drag-pointer",
+  "name": "@nekobird/hydra",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/nekobird/drag-pointer#readme",
   "dependencies": {
-    "@nekobird/piko": "0.0.5"
+    "@nekobird/doko": "0.0.1",
+    "@nekobird/piko": "0.0.5",
+    "@nekobird/vector2": "0.0.1"
   }
 }
