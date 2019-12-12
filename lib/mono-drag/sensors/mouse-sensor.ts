@@ -3,32 +3,29 @@ import {
 } from '@nekobird/doko';
 
 import {
-  MonoDragEvent,
+  MonoDrag,
   MonoDragEventType,
+} from '../internal';
+
+import {
+  MonoDragEvent,
 } from '../mono-drag-event';
 
 import {
-  MonoDrag
-} from '../shared';
+  Sensor
+} from './sensor';
 
-export class MouseSensor {
-  private monoDrag: MonoDrag;
-
-  public isListening: boolean = false;
+export class MouseSensor extends Sensor {
   public mouseButtonIsDown: boolean = false;
 
-  private target: HTMLElement | null = null;
-
-  constructor(monoDrag: MonoDrag) {
-    this.monoDrag = monoDrag;
+  constructor(target: HTMLElement) {
+    super();
   }
 
   public attach(): boolean {
-    let { target } = this.monoDrag.config;
-
     if (
       this.isListening === false
-      && isHTMLElement(target) === true
+      && isHTMLElement(this.target) === true
     ) {
       this.target = target as HTMLElement;
 

@@ -1,26 +1,15 @@
 import {
-  isHTMLElement
+  isHTMLElement,
 } from '@nekobird/doko';
-
-import { Vector2 } from '@nekobird/vector2';
-
-declare class MonoDrag {
-  config
-};
-
-declare class MonoDragEvent {
-  identifier
-  time
-  type
-  position
-  velocity
-  acceleration
-  originalEvent
-};
+import {
+  Vector2,
+} from '@nekobird/vector2';
 
 import {
+  MonoDrag,
+  MonoDragEvent,
   MonoDragEventIdentifier,
-} from './shared';
+} from './internal';
 
 export class MonoDragStory {
   public monoDrag: MonoDrag;
@@ -66,7 +55,10 @@ export class MonoDragStory {
 
   public get translationDistance(): number | null {
     if (this.finalEvent !== null) {
-      return Vector2.getDistanceBetween(this.startingEvent.position, this.finalEvent.position);
+      return Vector2.getDistanceBetween(
+        this.startingEvent.position,
+        this.finalEvent.position,
+      );
     }
     return null;
   }
@@ -114,8 +106,10 @@ export class MonoDragStory {
   }
 
   private updateMaxTranslationDistance(event: MonoDragEvent) {
-    const distance = Vector2.getDistanceBetween(this.startingEvent.position, event.position);
-
+    const distance = Vector2.getDistanceBetween(
+      this.startingEvent.position,
+      event.position,
+    );
     if (distance > this.maxTranslationDistance) {
       this.maxTranslationDistance = distance;
     }

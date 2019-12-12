@@ -9,7 +9,7 @@ import {
 
 import {
   MonoDragStory
-} from './mono-drag-story';
+} from './internal';
 
 export class MonoDrag {
   public config: MonoDragConfig;
@@ -18,11 +18,8 @@ export class MonoDrag {
 
   constructor(config?: Partial<MonoDragConfig>) {
     this.config = {...MONO_DRAG_DEFAULT_CONFIG};
-
     this.setConfig(config);
-
     this.sensorHub = new SensorHub(this);
-
     this.sensorHub.listen();
   }
 
@@ -30,7 +27,6 @@ export class MonoDrag {
     if (typeof config === 'object') {
       Object.assign(this.config, config);
     }
-
     return this;
   }
 

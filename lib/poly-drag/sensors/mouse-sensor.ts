@@ -33,11 +33,11 @@ export class MouseSensor {
     ) {
       this.target = target as HTMLElement;
 
-      this.target.addEventListener('mousedown', this.onMouseDown);
+      this.target.addEventListener('mousedown',   this.onMouseDown);
       this.target.addEventListener('contextmenu', this.onContextMenu);
 
       window.addEventListener('mousemove', this.onMouseMove);
-      window.addEventListener('mouseup', this.onMouseUp);
+      window.addEventListener('mouseup',   this.onMouseUp);
 
       // document.documentElement.addEventListener('mouseleave', this.onMouseLeave);
 

@@ -2,7 +2,7 @@ import {
   MonoDrag,
   MonoDragEvent,
   MonoDragStory,
-} from './shared';
+} from './internal';
 
 export interface MonoDragConfig {
   target?: HTMLElement;

@@ -1,15 +1,11 @@
 import {
   Vector2,
 } from '@nekobird/vector2';
-
-import {
-  MonoDragEventType,
-  MonoDragEventIdentifier,
-} from './shared';
-
 import {
   MonoDrag,
-} from './shared';
+  MonoDragEventIdentifier,
+  MonoDragEventType,
+} from './internal';
 
 export class MonoDragEvent {
   public monoDrag: MonoDrag;
@@ -45,7 +41,7 @@ export class MonoDragEvent {
     let clientY;
 
     if (
-         isTouch === true
+      isTouch === true
       && typeof touch === 'object'
       && touch instanceof Touch
     ) {
@@ -57,11 +53,8 @@ export class MonoDragEvent {
       clientY = this.touch.clientY;
     } else {
       this.identifier = 'mouse';
-
       const event = originalEvent as MouseEvent;
-
       this.targetFromEvent = event.target;
-
       clientX = event.clientX;
       clientY = event.clientY;
     }

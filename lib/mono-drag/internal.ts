@@ -8,4 +8,14 @@ export declare class MonoDrag {
 
 export declare class MonoDragEvent {
   type;
+  identifier;
+  time;
+  originalEvent;
+  position;
+  velocity;
+  acceleration;
 };
+
+export declare class MonoDragStory {
+  
+}

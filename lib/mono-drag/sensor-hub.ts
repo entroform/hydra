@@ -2,7 +2,7 @@ import {
   truthChain,
 } from '@nekobird/piko';
 
-import { MonoDrag } from './shared';
+import { MonoDrag } from './internal';
 
 import {
   MonoDragStory,
@@ -11,7 +11,7 @@ import {
 import {
   MonoDragEvent,
   MonoDragEventIdentifier,
-} from './shared';
+} from './internal';
 
 import {
   MouseSensor,

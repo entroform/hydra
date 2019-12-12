@@ -5,8 +5,16 @@ import {
 import {
   MonoDrag,
   MonoDragEventType,
+} from '../internal';
+
+import {
   MonoDragEvent,
-} from '../shared';
+} from '../mono-drag-event';
+
+export class TouchSensorConfig {
+  target: HTMLElement;
+  dispatch: ()
+}
 
 export class TouchSensor {
   private monoDrag: MonoDrag;
@@ -14,30 +22,24 @@ export class TouchSensor {
   public isListening: boolean = false;
   public target: HTMLElement | null = null;
 
-  constructor(monoDrag: MonoDrag) {
+  constructor(config: TouchSensorConfig) {
     this.monoDrag = monoDrag;
   }
 
   public attach(): boolean {
     let { target } = this.monoDrag.config;
-
     if (
       this.isListening === false
       && isHTMLElement(target) === true
     ) {
       this.target = target as HTMLElement;
-
       this.target.addEventListener('touchstart', this.onTouchStart);
-
       window.addEventListener('touchmove', this.onTouchMove);
       window.addEventListener('touchend', this.onTouchEnd);
       window.addEventListener('touchcancel', this.onTouchCancel);
-
       this.isListening = true;
-
       return true;
     }
-
     return false;
   }
 
@@ -47,20 +49,14 @@ export class TouchSensor {
       && isHTMLElement(this.target) === true
     ) {
       const target = this.target as HTMLElement;
-
       target.removeEventListener('touchstart', this.onTouchStart);
-
       window.removeEventListener('touchmove', this.onTouchMove);
       window.removeEventListener('touchend', this.onTouchEnd);
       window.removeEventListener('touchcancel', this.onTouchCancel);
-
       this.target = null;
-
       this.isListening = false;
-
       return true;
     }
-
     return false;
   }
 
@@ -83,7 +79,6 @@ export class TouchSensor {
   private dispatch(type: MonoDragEventType, event: TouchEvent) {
     [...event.changedTouches].forEach(touch => {
       const monoDragEvent = new MonoDragEvent(this.monoDrag, type, event, true, touch);
-
       this.monoDrag.sensorHub.receive(monoDragEvent);
     });
   }
