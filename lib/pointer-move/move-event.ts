@@ -1,6 +1,6 @@
 import {
   Vector2,
-} from '~/rocket';
+} from '@nekobird/vector2';
 
 export type MoveEventType = 'move' | 'enter' | 'leave';
 

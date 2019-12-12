@@ -1,7 +1,10 @@
 import {
-  DOMUtil,
+  isHTMLElement,
+} from '@nekobird/doko';
+
+import {
   Vector2,
-} from '~/rocket';
+} from '@nekobird/vector2';
 
 import {
   MonoTap,
@@ -41,9 +44,7 @@ export class MonoTapEvent {
     this.monoTap = monoTap;
 
     this.time = Date.now();
-
     this.type = type;
-
     this.isTouch = isTouch;
 
     this.originalEvent = originalEvent;
@@ -79,10 +80,10 @@ export class MonoTapEvent {
   private updateOffset() {
     const { target, offsetFrom } = this.monoTap.config;
 
-    if (DOMUtil.isHTMLElement(target) === true) {
+    if (isHTMLElement(target) === true) {
       let element = target as HTMLElement;
 
-      if (DOMUtil.isHTMLElement(offsetFrom) === true) {
+      if (isHTMLElement(offsetFrom) === true) {
         element = offsetFrom as HTMLElement;
       }
 
