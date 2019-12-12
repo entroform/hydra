@@ -1,11 +1,13 @@
 import {
   isHTMLElement
 } from '@nekobird/doko';
+
 import { Vector2 } from '@nekobird/vector2';
 
 declare class MonoDrag {
   config
 };
+
 declare class MonoDragEvent {
   identifier
   time
@@ -24,7 +26,6 @@ export class MonoDragStory {
   public monoDrag: MonoDrag;
 
   public identifier: MonoDragEventIdentifier;
-
   public offset: Vector2;
 
   public previousPosition: Vector2;
@@ -36,10 +37,8 @@ export class MonoDragStory {
   public previousEvent: MonoDragEvent | null = null;
   public currentEvent: MonoDragEvent | null = null;
   public finalEvent: MonoDragEvent | null = null;
-
   public startTime: number;
   public endTime: number | null = null;
-
   public maxTranslationDistance: number = 0;
 
   constructor(monoDrag: MonoDrag, event: MonoDragEvent) {
@@ -53,11 +52,8 @@ export class MonoDragStory {
     this.history = [];
 
     this.identifier = event.identifier;
-
     this.startTime = event.time;
-
     this.startingEvent = event;
-
     this.addEvent(event);
   }
 
@@ -65,7 +61,6 @@ export class MonoDragStory {
     if (this.endTime === null) {
       return null;
     }
-
     return this.startTime - this.endTime;
   }
 
@@ -73,7 +68,6 @@ export class MonoDragStory {
     if (this.finalEvent !== null) {
       return Vector2.getDistanceBetween(this.startingEvent.position, this.finalEvent.position);
     }
-
     return null;
   }
 
@@ -96,7 +90,6 @@ export class MonoDragStory {
 
         break;
       }
-
       case 'drag': {
         this.updateEventVectors(event);
 
@@ -107,13 +100,11 @@ export class MonoDragStory {
 
         break;
       }
-
       case 'stop': {
         this.addStopOrCancelEvent(event);
 
         break;
       }
-
       case 'cancel': {
         this.addStopOrCancelEvent(event);
 

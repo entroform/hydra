@@ -1,30 +1,25 @@
 import {
   Vector2,
-} from '~/rocket';
+} from '@nekobird/vector2';
 
 import {
   PolyDrag,
 } from './poly-drag';
 
 export type PolyDragEventIdentifier = 'mouse' | number;
-
 export type PolyDragEventType = 'start' | 'drag' | 'stop' | 'cancel';
 
 export class PolyDragEvent {
   public polyDrag: PolyDrag;
 
   public type: PolyDragEventType;
-
   public identifier: PolyDragEventIdentifier;
-
   public originalEvent: MouseEvent | TouchEvent;
 
   public isTouch: boolean = false;
-
   public touch?: Touch;
 
   public targetFromEvent: EventTarget | null;
-
   public target: HTMLElement | null;
 
   public position: Vector2;
@@ -41,27 +36,21 @@ export class PolyDragEvent {
     touch?: Touch,
   ) {
     this.time = Date.now();
-
     this.polyDrag = polyDrag;
-
     this.type = type;
-
     this.originalEvent = event;
-
     this.isTouch = isTouch;
 
     let clientX;
     let clientY;
 
     if (
-      isTouch === true
+         isTouch === true
       && typeof touch === 'object'
       && touch instanceof Touch
     ) {
       this.touch = touch as Touch;
-
       this.identifier = this.touch.identifier;
-
       this.targetFromEvent = this.touch.target;
 
       clientX = this.touch.clientX;
