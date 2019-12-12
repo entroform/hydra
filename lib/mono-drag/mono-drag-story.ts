@@ -12,7 +12,7 @@ import {
 } from './internal';
 
 export class MonoDragStory {
-  public monoDrag: MonoDrag;
+  // public monoDrag: MonoDrag;
 
   public identifier: MonoDragEventIdentifier;
   public offset: Vector2;
