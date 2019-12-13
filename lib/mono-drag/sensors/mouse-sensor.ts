@@ -22,10 +22,10 @@ export class MouseSensor extends Sensor {
     super();
   }
 
-  public attach(): boolean {
+  public attach(target: HTMLElement): boolean {
     if (
       this.isListening === false
-      && isHTMLElement(this.target) === true
+      && isHTMLElement(target) === true
     ) {
       this.target = target as HTMLElement;
 
@@ -69,6 +69,11 @@ export class MouseSensor extends Sensor {
     return false;
   }
 
+  private dispatch(type: MonoDragEventType, event: MouseEvent) {
+    const monoDragEvent = new MonoDragEvent(this.monoDrag, type, event);
+    this.monoDrag.sensorHub.receive(monoDragEvent);
+  }
+
   private onMouseDown = (event: MouseEvent) => {
     if (this.mouseButtonIsDown === false) {
       this.dispatch('start', event);
@@ -103,10 +108,5 @@ export class MouseSensor extends Sensor {
       event.preventDefault();
       event.stopPropagation();
     }
-  }
-
-  private dispatch(type: MonoDragEventType, event: MouseEvent) {
-    const monoDragEvent = new MonoDragEvent(this.monoDrag, type, event);
-    this.monoDrag.sensorHub.receive(monoDragEvent);
   }
 }
