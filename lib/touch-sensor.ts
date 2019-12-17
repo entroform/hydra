@@ -2,14 +2,14 @@ import { isHMLElement } from '@nekobird/doko';
 import Sensor from './sensor';
 
 export class TouchSensor extends Sensor {
-  constructor(target: HTMLElement) {
+  constructor(target: HTMLElement | Window) {
     super(target);
   }
 
   public attach(): boolean {
     if (
       !this.isListening
-      && isHMLElement(this.target)
+      && (isHMLElement(this.target) || this.target === window)
     ) {
       (this.target as HTMLElement).addEventListener('touchstart', this.handleTouchStart);
       window.addEventListener('touchmove', this.handleTouchMove);
