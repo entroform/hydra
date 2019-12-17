@@ -11,10 +11,10 @@ export class TouchSensor extends Sensor {
       !this.isListening
       && isHMLElement(this.target)
     ) {
-      this.target.addEventListener('touchstart',  this.handleTouchStart);
-      this.target.addEventListener('touchmove',   this.handleTouchMove);
-      this.target.addEventListener('touchend',    this.handleTouchEnd);
-      this.target.addEventListener('touchcancel', this.handleTouchCancel);
+      (this.target as HTMLElement).addEventListener('touchstart', this.handleTouchStart);
+      window.addEventListener('touchmove', this.handleTouchMove);
+      window.addEventListener('touchend', this.handleTouchEnd);
+      window.addEventListener('touchcancel', this.handleTouchCancel);
       this.isListening = true;
       return true;
     }
@@ -23,26 +23,36 @@ export class TouchSensor extends Sensor {
 
   public detach(): boolean {
     if (this.isListening) {
-      this.target.removeEventListener('touchstart',  this.handleTouchStart);
-      this.target.removeEventListener('touchmove',   this.handleTouchMove);
-      this.target.removeEventListener('touchend',    this.handleTouchEnd);
-      this.target.removeEventListener('touchcancel', this.handleTouchCancel);
+      (this.target as HTMLElement).removeEventListener('touchstart', this.handleTouchStart);
+      window.removeEventListener('touchmove', this.handleTouchMove);
+      window.removeEventListener('touchend', this.handleTouchEnd);
+      window.removeEventListener('touchcancel', this.handleTouchCancel);
       this.isListening = false;
       return true;
     }
     return false;
   }
 
-  private handleTouchStart = (event: MouseEvent) => {
+  private handleTouchStart = (event: TouchEvent) => {
+    this.dispatch('start', event);
   }
 
-  private handleTouchMove = (event: MouseEvent) => {
-
+  private handleTouchMove = (event: TouchEvent) => {
+    this.dispatch('drag', event);
   }
 
-  private handleTouchEnd = (event: MouseEvent) => {
+  private handleTouchEnd = (event: TouchEvent) => {
+    this.dispatch('stop', event);
   }
 
-  private handleTouchCancel = (event: MouseEvent) => {
+  private handleTouchCancel = (event: TouchEvent) => {
+    this.dispatch('cancel', event);
+  }
+
+  private dispatch(type: string, event: TouchEvent) {
+    [...event.changedTouches].forEach(touch => {
+      // const monoDragEvent = new MonoDragEvent(this.monoDrag, type, event, true, touch);
+      // this.monoDrag.sensorHub.receive(monoDragEvent);
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { isHMLElement } from '@nekobird/doko';
 import Sensor from './sensor';
 
-export class MouseDragSensor extends Sensor {
+export class MouseDownUpSensor extends Sensor {
   public mouseIsDown: boolean = false;
 
   constructor(target: HTMLElement) {
@@ -10,8 +10,8 @@ export class MouseDragSensor extends Sensor {
 
   public attach(): boolean {
     if (!this.isListening && isHMLElement(this.target)) {
-      (this.target as HTMLElement).addEventListener('mousedown', this.handleMouseDown);
-      window.addEventListener('mousemove', this.handleMouseMove);
+      this.target = this.target as HTMLElement;
+      this.target.addEventListener('mousedown', this.handleMouseDown);
       window.addEventListener('mouseup', this.handleMouseUp);
       this.isListening = true;
       return true;
@@ -21,8 +21,8 @@ export class MouseDragSensor extends Sensor {
 
   public detach(): boolean {
     if (this.isListening) {
-      (this.target as HTMLElement).removeEventListener('mousedown', this.handleMouseDown);
-      window.removeEventListener('mousemove', this.handleMouseMove);
+      this.target = this.target as HTMLElement;
+      this.target.removeEventListener('mousedown', this.handleMouseDown);
       window.removeEventListener('mouseup', this.handleMouseUp);
       this.isListening = false;
       return true;

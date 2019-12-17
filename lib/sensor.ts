@@ -1,9 +1,9 @@
 import { isHTMLElement } from '@nekobird/doko';
 
-export type EventType = 'MOUSE' | 'TOUCH';
+export type SensorEventType = 'MOUSE' | 'TOUCH';
 
 export interface SensorEvent {
-  type: EventType;
+  type: SensorEventType;
   identifier?: number;
   isTouch: boolean;
   event: MouseEvent | TouchEvent;
