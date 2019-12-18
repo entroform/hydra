@@ -15,17 +15,6 @@ export interface HydraConfig {
   onEachPointerDragMove: Function;
 }
 
-export interface HydraEvent {
-  type: 'MOUSE' | 'TOUCH';
-
-  originalEvent: MouseEvent | TouchEvent | DragEvent;
-  identifier?: 'MOUSE' | number;
-
-  position: [number, number];
-  velocity: [number, number];
-  acceleration: [number, number];
-}
-
 export interface HydraStory {
   originalEvent: MouseEvent | TouchEvent | DragEvent;
   history: [];
@@ -33,10 +22,5 @@ export interface HydraStory {
 
 export default class Hydra {
   constructor() {
-
-  }
-
-  attachSensor() {
-
   }
 }

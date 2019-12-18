@@ -34,22 +34,22 @@ export class TouchSensor extends Sensor {
   }
 
   private handleTouchStart = (event: TouchEvent) => {
-    this.dispatch('start', event);
+    this.capture('start', event);
   }
 
   private handleTouchMove = (event: TouchEvent) => {
-    this.dispatch('drag', event);
+    this.capture('drag', event);
   }
 
   private handleTouchEnd = (event: TouchEvent) => {
-    this.dispatch('stop', event);
+    this.capture('stop', event);
   }
 
   private handleTouchCancel = (event: TouchEvent) => {
-    this.dispatch('cancel', event);
+    this.capture('cancel', event);
   }
 
-  private dispatch(type: string, event: TouchEvent) {
+  private capture(type: string, event: TouchEvent) {
     [...event.changedTouches].forEach(touch => {
       // const monoDragEvent = new MonoDragEvent(this.monoDrag, type, event, true, touch);
       // this.monoDrag.sensorHub.receive(monoDragEvent);
