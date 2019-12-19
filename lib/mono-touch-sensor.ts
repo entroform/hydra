@@ -2,6 +2,9 @@ import { isHMLElement } from '@nekobird/doko';
 import Sensor from './sensor';
 
 export class TouchSensor extends Sensor {
+  private isActive: boolean = false;
+  private identifier: number | null = null;
+
   constructor(target: HTMLElement | Window) {
     super(target);
   }
@@ -12,8 +15,8 @@ export class TouchSensor extends Sensor {
       && (isHMLElement(this.target) || this.target === window)
     ) {
       (this.target as HTMLElement).addEventListener('touchstart', this.handleTouchStart);
-      window.addEventListener('touchmove', this.handleTouchMove);
-      window.addEventListener('touchend', this.handleTouchEnd);
+      window.addEventListener('touchmove',   this.handleTouchMove);
+      window.addEventListener('touchend',    this.handleTouchEnd);
       window.addEventListener('touchcancel', this.handleTouchCancel);
       this.isListening = true;
       return true;
@@ -24,8 +27,8 @@ export class TouchSensor extends Sensor {
   public detach(): boolean {
     if (this.isListening) {
       (this.target as HTMLElement).removeEventListener('touchstart', this.handleTouchStart);
-      window.removeEventListener('touchmove', this.handleTouchMove);
-      window.removeEventListener('touchend', this.handleTouchEnd);
+      window.removeEventListener('touchmove',   this.handleTouchMove);
+      window.removeEventListener('touchend',    this.handleTouchEnd);
       window.removeEventListener('touchcancel', this.handleTouchCancel);
       this.isListening = false;
       return true;
@@ -34,19 +37,19 @@ export class TouchSensor extends Sensor {
   }
 
   private handleTouchStart = (event: TouchEvent) => {
-    this.capture('start', event);
+    this.capture('touch:mono:start', event);
   }
 
   private handleTouchMove = (event: TouchEvent) => {
-    this.capture('drag', event);
+    this.capture('touch:move', event);
   }
 
   private handleTouchEnd = (event: TouchEvent) => {
-    this.capture('stop', event);
+    this.capture('touch:end', event);
   }
 
   private handleTouchCancel = (event: TouchEvent) => {
-    this.capture('cancel', event);
+    this.capture('touch:cancel', event);
   }
 
   private capture(type: string, event: TouchEvent) {

@@ -32,13 +32,21 @@ export class MouseDragSensor extends Sensor {
 
   private handleMouseDown = (event: MouseEvent) => {
     this.mouseIsDown = true;
+    this.capture('sensor:mouse:drag-start', event);
   }
 
   private handleMouseMove = (event: MouseEvent) => {
-
+    if (this.mouseIsDown) {
+      this.capture('sensor:mouse:drag', event);
+    }
   }
 
-  private handleMouseUp =(event: MouseEvent) => {
+  private handleMouseUp = (event: MouseEvent) => {
     this.mouseIsDown = false;
+    this.capture('sensor:mouse:drag-end', event);
+  }
+
+  private capture(type, event) {
+
   }
 }
