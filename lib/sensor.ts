@@ -18,6 +18,10 @@ export default abstract class Sensor {
     return false;
   }
 
+  public targetIsReady(): boolean {
+    return isHTMLElement(this.target) || this.target === window;
+  }
+
   public abstract attach(): boolean;
   public abstract detach(): boolean;
 }

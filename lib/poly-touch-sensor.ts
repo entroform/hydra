@@ -1,9 +1,19 @@
 import { isHMLElement } from '@nekobird/doko';
 import Sensor from './sensor';
 
-export class TouchSensor extends Sensor {
+function getIdentifiersFromEvent(event: TouchEvent) {
+  return (currentIdentifiers: number[] = []): number[] => (
+    [...new Set(currentIdentifiers.concat([...event.changedTouches].map(event => event.identifier)))]
+  );
+}
+
+export class PolyTouchSensor extends Sensor {
+  public isActive: boolean = false;
+  public activeTouchIdentifiers: number[];
+
   constructor(target: HTMLElement | Window) {
     super(target);
+    this.activeTouchIdentifiers = [];
   }
 
   public attach(): boolean {
@@ -34,7 +44,11 @@ export class TouchSensor extends Sensor {
   }
 
   private handleTouchStart = (event: TouchEvent) => {
-    this.capture('touch:start', event);
+    if (event.changedTouches) {
+      this.isActive = true;
+      this.activeTouchIdentifiers = getIdentifiersFromEvent(event)(this.activeTouchIdentifiers);
+      this.capture('touch:start', event);
+    }
   }
 
   private handleTouchMove = (event: TouchEvent) => {
